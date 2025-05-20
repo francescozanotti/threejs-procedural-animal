@@ -51,16 +51,45 @@ function Skeleton() {
 	this.joints = {};
 	this.bones = {};
 
+	// Core body
 	this.addJoint('hip-spine', 0, 0.9, 0);
 	this.addJoint('tailTip', 0, 0.8, 0);
 	this.addJoint('head-neck', 0, 1.46, 0);
-	this.addJoint('philange-1-distal-tip', 0.7, 1.56, 0);
-	this.addJoint('philange-2-distal-tip', 0.8, 1.46, 0);
-	this.addJoint('philange-3-distal-tip', 0.81, 1.41, 0);
-	this.addJoint('philange-4-distal-tip', 0.8, 1.36, 0);
-	this.addJoint('philange-5-distal-tip', 0.78, 1.31, 0);
-	this.addJoint('tarsal-1-distal-tip', 0.33, -0.15, 0);
+	
+	// Left arm and hand
+	this.addJoint('l-shoulder', 0.2, 1.4, 0);
+	this.addJoint('l-elbow', 0.5, 1.4, 0);
+	this.addJoint('l-wrist', 0.8, 1.46, 0);
+	this.addJoint('l-thumb-tip', 0.85, 1.5, 0.05);
+	this.addJoint('l-index-tip', 0.9, 1.5, 0);
+	this.addJoint('l-middle-tip', 0.9, 1.45, 0);
+	this.addJoint('l-ring-tip', 0.9, 1.4, 0);
+	this.addJoint('l-pinky-tip', 0.85, 1.35, 0);
+	
+	// Right arm and hand (mirrored)
+	this.addJoint('r-shoulder', -0.2, 1.4, 0);
+	this.addJoint('r-elbow', -0.5, 1.4, 0);
+	this.addJoint('r-wrist', -0.8, 1.46, 0);
+	this.addJoint('r-thumb-tip', -0.85, 1.5, 0.05);
+	this.addJoint('r-index-tip', -0.9, 1.5, 0);
+	this.addJoint('r-middle-tip', -0.9, 1.45, 0);
+	this.addJoint('r-ring-tip', -0.9, 1.4, 0);
+	this.addJoint('r-pinky-tip', -0.85, 1.35, 0);
+	
+	// Legs
+	this.addJoint('l-hip', 0.15, 0.8, 0);
+	this.addJoint('l-knee', 0.15, 0.4, 0);
+	this.addJoint('l-ankle', 0.15, 0, 0);
+	this.addJoint('l-foot', 0.15, 0, 0.2);
+	this.addJoint('l-toe', 0.15, 0, 0.4);
+	
+	this.addJoint('r-hip', -0.15, 0.8, 0);
+	this.addJoint('r-knee', -0.15, 0.4, 0);
+	this.addJoint('r-ankle', -0.15, 0, 0);
+	this.addJoint('r-foot', -0.15, 0, 0.2);
+	this.addJoint('r-toe', -0.15, 0, 0.4);
 
+	// Spine
 	this.addBone('spine', 'hip-spine', 'head-neck');
 	this.cutBone(
 		'spine', 
@@ -72,26 +101,46 @@ function Skeleton() {
 	this.cutBoneManyTimes('spine-thoracic', 12, 'spine-t', true);
 	this.cutBoneManyTimes('spine-lumbar', 5, 'spine-l', true);
 
-	this.addBone('arm', 't1-c7', 'philange-2-distal-tip');
-	this.addBone('leg', 'hip-spine', 'tarsal-1-distal-tip');
-	this.cutBoneManyTimes('arm', 7, 'arm', false, [18, 30, 26, 8, 5, 3, 2, 1]);
-	this.cutBoneManyTimes('leg', 7, 'leg', false, [14, 38, 40, 13, 4, 1.5, 1, 0.5]);
+	// Left arm
+	this.addBone('l-upper-arm', 't1-c7', 'l-shoulder');
+	this.addBone('l-upper-arm-bone', 'l-shoulder', 'l-elbow');
+	this.addBone('l-lower-arm', 'l-elbow', 'l-wrist');
+	
+	// Left hand
+	this.addBone('l-thumb', 'l-wrist', 'l-thumb-tip');
+	this.addBone('l-index', 'l-wrist', 'l-index-tip');
+	this.addBone('l-middle', 'l-wrist', 'l-middle-tip');
+	this.addBone('l-ring', 'l-wrist', 'l-ring-tip');
+	this.addBone('l-pinky', 'l-wrist', 'l-pinky-tip');
+	
+	// Right arm
+	this.addBone('r-upper-arm', 't1-c7', 'r-shoulder');
+	this.addBone('r-upper-arm-bone', 'r-shoulder', 'r-elbow');
+	this.addBone('r-lower-arm', 'r-elbow', 'r-wrist');
+	
+	// Right hand
+	this.addBone('r-thumb', 'r-wrist', 'r-thumb-tip');
+	this.addBone('r-index', 'r-wrist', 'r-index-tip');
+	this.addBone('r-middle', 'r-wrist', 'r-middle-tip');
+	this.addBone('r-ring', 'r-wrist', 'r-ring-tip');
+	this.addBone('r-pinky', 'r-wrist', 'r-pinky-tip');
+	
+	// Left leg
+	this.addBone('l-upper-leg', 'hip-spine', 'l-hip');
+	this.addBone('l-thigh', 'l-hip', 'l-knee');
+	this.addBone('l-shin', 'l-knee', 'l-ankle');
+	this.addBone('l-foot-bone', 'l-ankle', 'l-foot');
+	this.addBone('l-toe-bone', 'l-foot', 'l-toe');
+	
+	// Right leg
+	this.addBone('r-upper-leg', 'hip-spine', 'r-hip');
+	this.addBone('r-thigh', 'r-hip', 'r-knee');
+	this.addBone('r-shin', 'r-knee', 'r-ankle');
+	this.addBone('r-foot-bone', 'r-ankle', 'r-foot');
+	this.addBone('r-toe-bone', 'r-foot', 'r-toe');
 
-	this.addBone('thumb', 'arm3-arm4', 'philange-1-distal-tip');
-	this.cutBoneManyTimes('thumb', 3, 'thumb', false, [8, 5, 3, 2]);
-	this.addBone('philange-3', 'arm3-arm4', 'philange-3-distal-tip');
-	this.cutBoneManyTimes('philange-3', 3, 'philange-3', false, [8, 5, 3, 2, 1]);
-	this.addBone('philange-4', 'arm3-arm4', 'philange-4-distal-tip');
-	this.cutBoneManyTimes('philange-4', 3, 'philange-4', false, [8, 5, 3, 2, 1]);
-	this.addBone('philange-5', 'arm3-arm4', 'philange-5-distal-tip');
-	this.cutBoneManyTimes('philange-5', 3, 'philange-5', false, [8, 5, 3, 2, 1]);
-	// this.cutBoneManyTimes('arm', 6, 'arm', false, [18, 30, 26, 8, 5, 3, 2]);
-	// this.cutBoneManyTimes('arm', 6, 'arm', false, [18, 30, 26, 8, 5, 3, 2]);
-	// this.cutBoneManyTimes('arm', 6, 'arm', false, [18, 30, 26, 8, 5, 3, 2]);
-
-
-
-	this.addBone('spine', 'hip-spine', 'tailTip');
+	// Tail (optional)
+	this.addBone('tail', 'hip-spine', 'tailTip');
 }
 
 Skeleton.prototype.createPreview = function() {
