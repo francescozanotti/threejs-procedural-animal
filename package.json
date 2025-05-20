@@ -12,7 +12,8 @@
   "dependencies": {
     "lodash": "^2.4.1",
     "simplex-noise": "^2.1.1",
-    "three": "^0.82.1"
+    "three": "^0.82.1",
+    "three-orbit-controls": "^82.1.0"
   },
   "devDependencies": {
     "input-resize": "^2.0.0",
